@@ -3,15 +3,12 @@ import { createTwitchClient } from './twitch.js';
 import { startTelegram, stopTelegram, broadcast } from './telegram.js';
 import { Store } from './store.js';
 
-// --- Валидация конфигурации ---
 const errors = [];
 if (!config.botToken) errors.push('BOT_TOKEN не задан в .env');
 if (!config.adminId) errors.push('ADMIN_ID не задан в .env');
 if (!config.streamers.length) errors.push('STREAMERS не задан (хотя бы один стример)');
 if (errors.length) {
-  console.error('❌ Ошибки конфигурации:');
-  errors.forEach(e => console.error('  -', e));
-  console.error('\nСоздайте .env на основе .env.example');
+  console.error('❌ Ошибки:', errors);
   process.exit(1);
 }
 
@@ -26,7 +23,7 @@ if (!config.twitchOauthToken) {
 }
 
 // --- Обработка сообщений из Twitch ---
-function onTwitchMessage({ channel, username, displayName, message }) {
+function onTwitchMessage({ channel, displayName, message }) {
   const matches = message.match(config.betboomRegex) || [];
   if (matches.length === 0) return;
 
@@ -76,4 +73,4 @@ process.once('SIGINT', () => {
   stopTelegram();
   for (const c of Object.values(clients)) c.disconnect();
   process.exit(0);
-}
+});

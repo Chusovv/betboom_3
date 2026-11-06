@@ -26,7 +26,7 @@ const bot = new Telegraf(config.botToken);
 bot.command('start', (ctx) => {
   subscribers.add(String(ctx.chat.id));
   saveSubscribers(subscribers);
-  ctx.reply('✅ Подписка оформлена. Буду присылать сообщения из Twitch по ключевым словам.');
+  ctx.reply('✅ Подписка оформлена. Буду присылать ссылки на колеса фрибетов BetBoom.');
 });
 
 bot.command('stop', (ctx) => {
@@ -41,7 +41,7 @@ bot.command('status', (ctx) => {
     `• Подписка: ${subscribers.has(String(ctx.chat.id)) ? '✅' : '❌'}\n` +
     `• Подписчиков: ${subscribers.size}\n` +
     `• Стримеров: ${config.streamers.join(', ') || '—'}\n` +
-    `• Ключевые слова: ${config.keywords.join(', ') || '—'}`
+    `• TTL кэша ссылок: ${config.linkCacheTtlMin} мин`
   );
 });
 
