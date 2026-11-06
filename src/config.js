@@ -23,14 +23,12 @@ export const config = {
       .filter(Boolean)
   )],
 
-  // Ключевые слова для фильтрации (через запятую, регистронезависимо)
-  keywords: [...new Set(
-    (process.env.TWITCH_KEYWORDS || '')
-      .split(',')
-      .map(k => k.trim().toLowerCase())
-      .filter(Boolean)
-  )],
+  // Регулярка для ссылок на колеса фрибетов BetBoom
+  betboomRegex: /https?:\/\/(?:www\.)?betboom\.ru\/freestream\/[a-zA-Z0-9_-]+(?:\?[^\s]*)?(?:#[^\s]*)?/i,
 
-  // Папка для данных (подписчики)
+  // TTL кэша ссылок (минуты) — чтобы не слать дубли
+  linkCacheTtlMin: Number(process.env.LINK_CACHE_TTL_MIN || 60),
+
+  // Папка для данных (подписчики, кэш ссылок)
   dataDir: path.join(__dirname, '..', 'data'),
 };
