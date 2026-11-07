@@ -46,11 +46,11 @@ bot.command('status', (ctx) => {
 });
 
 // --- Рассылка ---
-export async function broadcast(text) {
+export async function broadcast(text, extra = {}) {
   let sent = 0, failed = 0;
   for (const chatId of subscribers) {
     try {
-      await bot.telegram.sendMessage(chatId, text, { disable_web_page_preview: true });
+      await bot.telegram.sendMessage(chatId, text, { disable_web_page_preview: true, ...extra });
       sent++;
     } catch (e) {
       failed++;
@@ -61,6 +61,14 @@ export async function broadcast(text) {
   }
   saveSubscribers(subscribers);
   console.log(`📨 Разослано: ${sent}, ошибок: ${failed}`);
+}
+
+export async function notifyAdmin(text, extra = {}) {
+  try {
+    await bot.telegram.sendMessage(config.adminId, text, { disable_web_page_preview: true, ...extra });
+  } catch (e) {
+    console.error('❌ Не удалось уведомить админа:', e.message);
+  }
 }
 
 export function startTelegram() {

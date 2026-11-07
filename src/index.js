@@ -2,6 +2,7 @@ import { config } from './config.js';
 import { createTwitchClient } from './twitch.js';
 import { startTelegram, stopTelegram, broadcast } from './telegram.js';
 import { Store } from './store.js';
+import { startWheelMonitor, stopWheelMonitor } from './wheel-monitor.js';
 
 const errors = [];
 if (!config.botToken) errors.push('BOT_TOKEN не задан в .env');
@@ -67,10 +68,16 @@ startTelegram().catch(e => {
   process.exit(1);
 });
 
+// --- Запуск монитора колёс Betboom ---
+startWheelMonitor().catch(e => {
+  console.error('❌ Ошибка запуска монитора колёс Betboom:', e.message);
+});
+
 // --- Graceful shutdown ---
 process.once('SIGINT', () => {
   console.log('\n🛑 Остановка...');
   stopTelegram();
+  stopWheelMonitor();
   for (const c of Object.values(clients)) c.disconnect();
   process.exit(0);
 });

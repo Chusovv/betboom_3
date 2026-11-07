@@ -25,6 +25,15 @@ export const config = {
   // Регулярка для ссылок на колеса фрибетов BetBoom
   betboomRegex: /https?:\/\/(?:www\.)?betboom\.ru\/freestream\/[a-zA-Z0-9_-]+(?:\?[^\s]*)?(?:#[^\s]*)?/i,
 
+  // Ссылки на колёса фрибета BetBoom для мониторинга (через запятую или перенос строки)
+  betboomWheelLinks: (process.env.BETBOOM_WHEEL_LINKS || '')
+    .split(/[,\s]+/)
+    .map(s => s.trim())
+    .filter(Boolean),
+
+  // Интервал проверки состояния колёс (минуты)
+  betboomWheelPollMin: Number(process.env.BETBOOM_WHEEL_POLL_MIN || 60),
+
   // TTL кэша ссылок (минуты) — чтобы не слать дубли
   linkCacheTtlMin: Number(process.env.LINK_CACHE_TTL_MIN || 60),
 
