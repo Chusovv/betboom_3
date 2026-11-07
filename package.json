@@ -1,13 +1,13 @@
 {
-  "name": "twitch-keyword-bot",
+  "name": "betboom-wheel-monitor",
   "version": "2.0.0",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "install-deps": "npx playwright install chromium --with-deps"
   },
   "dependencies": {
-    "tmi.js": "^1.8.5",
     "telegraf": "^4.16.3",
     "dotenv": "^16.4.5",
     "playwright": "^1.49.0"

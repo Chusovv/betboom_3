@@ -10,21 +10,6 @@ export const config = {
   botToken: process.env.BOT_TOKEN || '',
   adminId: process.env.ADMIN_ID || '',
 
-  // Twitch
-  twitchNick: (process.env.TWITCH_NICK || 'justinfan').trim().toLowerCase(),
-  twitchOauthToken: (process.env.TWITCH_OAUTH_TOKEN || '').trim(),
-
-  // Стримеры для отслеживания (через запятую)
-  streamers: [...new Set(
-    (process.env.STREAMERS || '')
-      .split(',')
-      .map(s => s.trim().toLowerCase())
-      .filter(Boolean)
-  )],
-
-  // Регулярка для ссылок на колеса фрибетов BetBoom
-  betboomRegex: /https?:\/\/(?:www\.)?betboom\.ru\/freestream\/[a-zA-Z0-9_-]+(?:\?[^\s]*)?(?:#[^\s]*)?/i,
-
   // Ссылки на колёса фрибета BetBoom для мониторинга (через запятую или перенос строки)
   betboomWheelLinks: (process.env.BETBOOM_WHEEL_LINKS || '')
     .split(/[,\s]+/)
@@ -37,6 +22,6 @@ export const config = {
   // TTL кэша ссылок (минуты) — чтобы не слать дубли
   linkCacheTtlMin: Number(process.env.LINK_CACHE_TTL_MIN || 60),
 
-  // Папка для данных (подписчики, кэш ссылок)
+  // Папка для данных (подписчики, кэш ссылок, состояние колёс)
   dataDir: path.join(__dirname, '..', 'data'),
 };
